@@ -21,6 +21,9 @@ def makenew(line):
 def bfs(check, line, now, pre, count):
     global mx
 
+    if mx < count:
+        mx=count
+
     for i, item in enumerate(line):
         if i > now and check[i]==0:
             if pre < item:
@@ -40,10 +43,16 @@ def sol(size, line):
         temp[i]=1
         bfs(temp, line, i, item, 1)
 
+def sol1(size, line):
+    dp=makelist(size)
 
+    for i in range(size):
+        for j in range(i):
+            if line[i] > line[j] and dp[i] < dp[j]:
+                dp[i]=dp[j]
+        dp[i]+=1
+    print(max(dp))
 
 if __name__=="__main__":
     size, line=getInput()
-    sol(size, line)
-
-    print(mx)
+    sol1(size, line)
