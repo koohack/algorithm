@@ -105,17 +105,36 @@ def makelist1(num):
         out.append(0)
     return out
 
+def makenew(line):
+    out=[]
+    for i in line:
+        out.append(i)
+    return out
+
 def sol1(n):
-    check=makelist1(n)
+    check=[]
+
+    for i in range(n):
+        temp=makenew(check)
+        temp.append(i)
+        bfs1(temp, i, 1, n)
+
+def bfs1(check, pre, now, limit):
+    global count
+    if now==limit:
+        count+=1
+    else:
+        for i in range(limit):
+            if i not in check and abs(pre-i)!=1:
+                temp=makenew(check)
+                temp.append(i)
+                bfs1(check, i, now+1, limit)
 
 
-
-
-def bfs1():
-
-    return
 
 if __name__=="__main__":
     n=getInput()
     count=0
-    #sol(n)
+    sol1(n)
+
+    print(count)
