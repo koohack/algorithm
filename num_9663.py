@@ -1,5 +1,3 @@
-
-
 def getInput():
     return int(input())
 
@@ -126,11 +124,19 @@ def bfs1(check, pre, now, limit):
     else:
         for i in range(limit):
             if i not in check and abs(pre-i)!=1:
+
+                checker=0
+                for index, item in enumerate(check):
+                    if abs(now-index)==abs(item-i):
+                        checker=1
+                        break
+
+                if checker:
+                    continue
+
                 temp=makenew(check)
                 temp.append(i)
-                bfs1(check, i, now+1, limit)
-
-
+                bfs1(temp, i, now+1, limit)
 
 if __name__=="__main__":
     n=getInput()
