@@ -17,103 +17,38 @@ def sol(dp, x, y, fangxiang):
 
     n=len(dp)
     m=len(dp[0])
+    dx = [-1, 0, 1, 0]
+    dy = [0, 1, 0, -1]
+
+    dp[x][y]=2
+    count+=1
 
     while True:
 
-        print(x, y, count)
-        printdp(dp)
-
-        check=0
-        dx=[1,-1,0,0]
-        dy=[0,0,1,-1]
+        # 4방향에 갈 수 있는 자리 있는지 확인
+        empty=0
         for i in range(4):
-            tempx=x
-            tempy=y
-            tempx+=dx[i]
-            tempy+=dy[i]
-
-            if not (0 <= tempx < n and 0 <= tempy < m):
-                check+=1
-            elif dp[tempx][tempy]==1 or dp[tempx][tempy]==-1:
-                check+=1
-
-        if check==4:
-            if fangxiang==0:
-                if x+1 > n:
-                    print("0-1")
-                    break
-                elif dp[x+1][y]==-1:
-                    x+=1
-                elif dp[x+1][y]==1:
-                    print("0-2")
-                    break
-
-            elif fangxiang==1:
-                if y-1 < 0:
-                    print("1-1")
-                    break
-                elif dp[x][y-1]==-1:
-                    y-=1
-                elif dp[x][y-1]==1:
-                    print("1-2")
-                    break
-
-            elif fangxiang==2:
-                if x-1 < 0:
-                    print("2-1")
-                    break
-                elif dp[x-1][y]==-1:
-                    x-=1
-                elif dp[x-1][y]==1:
-                    print("2-2")
-                    break
-
-            elif fangxiang==3:
-                if y+1 > m:
-                    print("3-1")
-                    break
-                elif dp[x][y+1]==-1:
-                    y+=1
-                elif dp[x][y+1]==1:
-                    print("3-2")
-                    break
+            tempx=x+dx[(fangxiang+3)%4]
+            tempy=y+dy[(fangxiang+3)%4]
+            fangxiang = (fangxiang + 3) % 4
+            #갈 수 있음
+            if 0 < tempx < n and 0 < tempy < m and dp[tempx][tempy]==0:
+                empty=1
+                x=tempx
+                y=tempy
+                dp[x][y]=2
+                count+=1
+                break
 
 
-        fangxiang+=1
-        fangxiang=fangxiang%4
-
-        if fangxiang==0:
-            if y-1 >= 0:
-                if dp[x][y-1]==0:
-                    dp[x][y-1]=-1
-                    y-=1
-                    count+=1
-
-        elif fangxiang==1:
-            if x+1 < n:
-                if dp[x+1][y]==0:
-                    dp[x+1][y]=-1
-                    x+=1
-                    count+=1
-
-        elif fangxiang==2:
-            if y+1 < m:
-                if dp[x][y+1]==0:
-                    dp[x][y+1]=-1
-                    y+=1
-                    count+=1
-
-        elif fangxiang==3:
-            if x-1 >= 0:
-                if dp[x-1][y]==0:
-                    dp[x-1][y]=-1
-                    x-=1
-                    count+=1
-
-
-    print(count)
-
-
+        # 갈 곳이 없음
+        if not empty:
+            if dp[x-dx[fangxiang]][y-dy[fangxiang]]==1:
+                print(count)
+                break
+            else:
+                x-=dx[fangxiang]
+                y-=dy[fangxiang]
 
 
 if __name__=="__main__":
