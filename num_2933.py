@@ -118,10 +118,7 @@ def sol(r, c, dp, throw):
 
 if __name__=="__main__":
     r,c,dp,throw=getInput()
-    #for i in dp:
-     #   print("".join(i))
-    #print("---------------")
     sol(r,c,dp,throw)
-
+    #
     for i in dp:
         print("".join(i))
